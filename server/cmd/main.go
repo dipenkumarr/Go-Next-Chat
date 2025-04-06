@@ -6,9 +6,16 @@ import (
 	"github.com/dipenkumarr/go-next-chat/db"
 	"github.com/dipenkumarr/go-next-chat/internal/user"
 	"github.com/dipenkumarr/go-next-chat/router"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	dbConn, err := db.NewDatabase()
 	if err != nil {
 		log.Fatal("Could not initialize database: ", err)
