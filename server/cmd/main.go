@@ -5,6 +5,7 @@ import (
 
 	"github.com/dipenkumarr/go-next-chat/db"
 	"github.com/dipenkumarr/go-next-chat/internal/user"
+	"github.com/dipenkumarr/go-next-chat/internal/ws"
 	"github.com/dipenkumarr/go-next-chat/router"
 	"github.com/joho/godotenv"
 )
@@ -25,7 +26,10 @@ func main() {
 	userSvc := user.NewService(userRep)
 	userHandler := user.NewHandler(userSvc)
 
-	router.InitRouter(userHandler)
+	hub := ws.NewHub()
+	wsHandler := ws.NewHandler(hub)
+
+	router.InitRouter(userHandler, wsHandler)
 	router.Start("0.0.0.0:8080")
 
 }
